@@ -329,32 +329,52 @@
     
     <!-- Feedback Form Section -->
     <section class="feedback-section" id="feedback">
-      <h2>Feedback</h2>
-      <form id="feedbackForm" method="POST" action="YOUR_FEEDBACK_ENDPOINT">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" placeholder="Your Name">
+        <h2>Feedback</h2>
+        <form id="feedbackForm">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="user_name" placeholder="Your Name" required>
+          
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="user_email" placeholder="Your Email" required>
+          
+          <label for="message">Your Feedback:</label>
+          <textarea id="message" name="message" rows="4" placeholder="Your feedback here..." required></textarea>
+          
+          <input type="submit" value="Submit Feedback">
+        </form>
+      </section>
+    </div>
+    
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript">
+      // Initialize EmailJS with your public key
+      (function(){
+        emailjs.init("22gHrZZVa5G4W5xa0");
+      })();
+      
+      // Intercept form submission and send the email using EmailJS
+      document.getElementById("feedbackForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission
         
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="Your Email">
-        
-        <label for="message">Your Feedback:</label>
-        <textarea id="message" name="message" rows="4" placeholder="Your feedback here..."></textarea>
-        
-        <input type="submit" value="Submit Feedback">
-      </form>
-    </section>
-  </div>
-  
-  <!-- JavaScript for Parallax Scrolling -->
-  <script>
-    // A simple parallax effect that moves the background video slower than the scroll
-    window.addEventListener('scroll', function() {
-      var scrollY = window.pageYOffset;
-      // Adjust the parallax factor (0.3 means the video moves at 30% of the scroll speed)
-      var parallaxOffset = scrollY * 0.;
-      // Update the transform while preserving the horizontal centering
-      document.getElementById('bgVideo').style.transform = 'translateX(-50%) translateY(' + parallaxOffset + 'px)';
-    });
-  </script>
-</body>
-</html>
+        emailjs.sendForm("service_eyitoov", "template_ho6fca9", this)
+          .then(function() {
+            alert("Thank you for your feedback!");
+            document.getElementById("feedbackForm").reset();
+          }, function(error) {
+            console.error("FAILED...", error);
+            alert("Oops, something went wrong. Please try again later.");
+          });
+      });
+    </script>
+    
+    <!-- JavaScript for Parallax Scrolling -->
+    <script>
+      window.addEventListener('scroll', function() {
+        var scrollY = window.pageYOffset;
+        var parallaxOffset = scrollY * 0.3;
+        document.getElementById('bgVideo').style.transform = 'translateX(-50%) translateY(' + parallaxOffset + 'px)';
+      });
+    </script>
+  </body>
+  </html>
