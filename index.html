@@ -371,10 +371,11 @@
     <!-- JavaScript for Parallax Scrolling -->
     <script>
       window.addEventListener('scroll', function() {
-        var scrollY = window.pageYOffset;
-        var parallaxOffset = scrollY * 0.3;
-        document.getElementById('bgVideo').style.transform = 'translateX(-50%) translateY(' + parallaxOffset + 'px)';
-      });
+    var scrollY = window.pageYOffset;
+    var parallaxOffset = scrollY * 0.3;
+    // Invert the offset so the background lags behind (moves upward as you scroll down)
+    document.getElementById('bgVideo').style.transform = 'translateX(-50%) translateY(' + (-parallaxOffset) + 'px)';
+  });
     </script>
   </body>
   </html>
